@@ -35,4 +35,3 @@ account2=Bank_account (200,0.02)
 account1.make_deposit(50).make_deposit(100).make_deposit(150).make_withdrawal(100).yield_interest().display_account_info()
 account2.make_deposit(400).make_deposit(300).make_withdrawal(50).make_withdrawal(175).make_withdrawal(100).make_withdrawal(300).yield_interest().display_account_info()
 Bank_account.print_all_accounts()
-

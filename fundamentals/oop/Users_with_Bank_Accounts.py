@@ -19,6 +19,7 @@ class Bank_account :
     # adding the display_account_info method
     def display_account_info(self) :
         print (f"Balance: ${self.balance}")
+        return self.balance 
     #Adding a yield_interest method 
     def yield_interest (self,):
         if self.balance > 0:
@@ -29,10 +30,28 @@ class Bank_account :
         for account in cls.accounts:
             account.display_account_info()
     
-# Creating accounts : 
-account1= Bank_account (100,0.01)
-account2=Bank_account (200,0.02)
-account1.make_deposit(50).make_deposit(100).make_deposit(150).make_withdrawal(100).yield_interest().display_account_info()
-account2.make_deposit(400).make_deposit(300).make_withdrawal(50).make_withdrawal(175).make_withdrawal(100).make_withdrawal(300).yield_interest().display_account_info()
-Bank_account.print_all_accounts()
 
+class User :
+    def __init__(self,name) :
+        self.name=name
+        self.account = {
+            "main_account" : Bank_account(0, 0.02),
+            "savings" : Bank_account(0,0.05)
+        }
+
+    def display_user_balance(self):
+        #displays the user balance 
+        print (f"user : {self.name} , main account balance : {self.account['main_account'].display_account_info()}")
+        print(f"User: {self.name}, Savings Balance: {self.account['savings'].display_account_info()}")
+        return self
+    def transfer_money(self,amount,user):
+        self.amount -= amount
+        user.amount += amount
+        self.display_user_balance()
+        user.display_user_balance()
+        return self
+# Creating accounts : 
+omar = User("Omar")
+omar.account['main_account'].make_deposit(100)
+omar.account['savings'].make_deposit(50)
+omar.display_user_balance()
