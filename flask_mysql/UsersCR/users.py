@@ -8,6 +8,8 @@ class User:
         self.email = data['email']
         self.created_at = data['created_at']
         self.updated_at = data['updated_at']
+    def full_name (self) :
+        return f"{self.first_name}{self.last_name}" 
 
     @classmethod
     def get_all(cls):
@@ -42,3 +44,25 @@ class User:
         else:
             # If no user found, return None.
             return None
+    
+
+    @classmethod
+    def get_by_id(cls, data):
+        query = "SELECT * FROM users WHERE id = %(id)s"
+        result = connectToMySQL('users_cr_schema').query_db(query, data)
+        
+        if result:
+            # Assuming the first result is the desired object
+            return cls(result[0])
+        else:
+            return None
+   
+    @classmethod 
+    def update (cls, data ) : 
+        query = "UPDATE users SET first_name=%(first_name)s,last_name=%(last_name)s,email=%(email)s,updated_at=NOW() WHERE id = %(id)s;" 
+        return connectToMySQL("users_cr_schema").query_db(query,data)
+    @classmethod
+    def destroy (cls,data) : 
+        query= "DELETE FROM users WHERE id = %(id)s;" 
+        return connectToMySQL("users_cr_schema").query_db(query,data)
+    

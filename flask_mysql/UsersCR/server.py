@@ -29,8 +29,29 @@ def create():
         # User creation failed, maybe due to a duplicate email
         # You can add a flash message or handle the error as needed
         return redirect('/user/new')  # Redirect to the new user creation page with an error message
+@app.route ("/user/delete/<int:id>")
+def destroy (id):
+    data ={
+        'id': id
+    }
+    User.destroy(data)
+    return redirect ('/users')
+@app.route('/user/update',methods=['POST'])
+def update():
+    User.update(request.form)
+    return redirect('/users')
+@app.route('/user/edit/<int:id>')
+def edit(id):
+    data ={ 
+        "id":id
+    }
+    return render_template("edit_user.html",user=User.get_by_id(data))
 
-
+@app.route('/user/show/<int:id>')
+def show(id):
+    data = {"id": id}
+    user = User.get_by_id(data)
+    return render_template("show_user.html", user=user)
 
 if __name__=="__main__":
     app.run(debug=True)
